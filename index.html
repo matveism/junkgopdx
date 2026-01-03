@@ -953,11 +953,12 @@
       }
     }
     
-    /* FOOTER */
+    /* NEW MODERN FOOTER */
     .footer {
-      background: #111827;
-      color: #e5e7eb;
-      padding: 60px 0 30px;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      color: #374151;
+      padding: 80px 0 40px;
+      border-top: 1px solid #e5e7eb;
     }
     
     .footer__container {
@@ -965,29 +966,140 @@
       margin: 0 auto;
       padding: 0 30px;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 40px;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 50px;
+    }
+    
+    .footer__brand {
+      max-width: 300px;
+    }
+    
+    .footer__logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    
+    .footer__logo-img {
+      height: 45px;
+      width: auto;
+    }
+    
+    .footer__logo-text {
+      color: #16a34a;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    
+    .footer__tagline {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #4b5563;
+      margin-bottom: 25px;
+    }
+    
+    .footer__social {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .social-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: #374151;
+      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+    
+    .social-icon:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+    
+    .social-icon.instagram:hover {
+      background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+      color: white;
+    }
+    
+    .social-icon.facebook:hover {
+      background: #1877F2;
+      color: white;
+    }
+    
+    .social-icon.twitter:hover {
+      background: #1DA1F2;
+      color: white;
     }
     
     .footer__column h3 {
-      color: white;
+      color: #111827;
       font-size: 18px;
       font-weight: 700;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+      position: relative;
+      padding-bottom: 12px;
+    }
+    
+    .footer__column h3:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 3px;
+      background: #16a34a;
+      border-radius: 2px;
     }
     
     .footer__column ul {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
+    }
+    
+    .footer__column li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .footer__column i {
+      color: #16a34a;
+      font-size: 14px;
+      width: 20px;
     }
     
     .footer__column a {
-      color: #d1d5db;
-      transition: color 0.3s;
+      color: #4b5563;
+      transition: all 0.3s;
+      font-size: 15px;
     }
     
     .footer__column a:hover {
+      color: #16a34a;
+      transform: translateX(5px);
+    }
+    
+    .footer__contact-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #4b5563;
+      transition: color 0.3s;
+    }
+    
+    .footer__contact-link:hover {
+      color: #16a34a;
+    }
+    
+    .footer__contact-link i {
       color: #16a34a;
     }
     
@@ -995,22 +1107,62 @@
       text-align: center;
       margin-top: 60px;
       padding-top: 30px;
-      border-top: 1px solid #374151;
-      color: #9ca3af;
+      border-top: 1px solid #e5e7eb;
+      color: #6b7280;
       font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
     }
     
-    @media (max-width: 900px) {
+    .footer__legal {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+    
+    .footer__legal a {
+      color: #6b7280;
+      transition: color 0.3s;
+    }
+    
+    .footer__legal a:hover {
+      color: #16a34a;
+    }
+    
+    /* RESPONSIVE FOOTER */
+    @media (max-width: 1024px) {
       .footer__container {
         grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
+        gap: 40px;
+      }
+      
+      .footer__brand {
+        max-width: 100%;
+        grid-column: 1 / -1;
       }
     }
     
-    @media (max-width: 480px) {
+    @media (max-width: 640px) {
       .footer__container {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 40px;
+        padding: 0 20px;
+      }
+      
+      .footer {
+        padding: 60px 0 30px;
+      }
+      
+      .footer__bottom {
+        margin-top: 40px;
+        padding-top: 25px;
+      }
+      
+      .footer__legal {
+        flex-direction: column;
+        gap: 15px;
       }
     }
 
@@ -1197,44 +1349,86 @@
   </section>
 </main>
 
+<!-- NEW MODERN FOOTER -->
 <footer class="footer">
   <div class="footer__container">
-    <div class="footer__column">
-      <h3>JunkGo PDX</h3>
-      <p>Professional junk removal services in Portland, Oregon and surrounding areas.</p>
+    <!-- Brand Column -->
+    <div class="footer__brand">
+      <div class="footer__logo">
+        <img src="https://i.postimg.cc/4xS3kgQZ/Screenshot-2026-01-02-at-11-26-28-PM.png" class="footer__logo-img" alt="JunkGo PDX Logo">
+        <span class="footer__logo-text"></span>
+      </div>
+      <p class="footer__tagline">
+        Professional junk removal services in Portland, Oregon and surrounding areas. 
+        Fast, reliable, and eco-friendly disposal for homes and businesses.
+      </p>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/junk.go.pdx?igsh=MW96ZGRldjllcXg5bA==" target="_blank" class="social-icon instagram" aria-label="Follow us on Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.facebook.com/junkgopdx" target="_blank" class="social-icon facebook" aria-label="Like us on Facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://www.yelp.com/biz/junkgo-pdx-portland" target="_blank" class="social-icon twitter" aria-label="Find us on Yelp">
+          <i class="fab fa-yelp"></i>
+        </a>
+      </div>
     </div>
     
+    <!-- Quick Links Column -->
     <div class="footer__column">
       <h3>Quick Links</h3>
       <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><i class="fas fa-chevron-right"></i><a href="#home">Home</a></li>
+        <li><i class="fas fa-chevron-right"></i><a href="#services">Our Services</a></li>
+        <li><i class="fas fa-chevron-right"></i><a href="#contact">Get Quote</a></li>
+        <li><i class="fas fa-chevron-right"></i><a href="#contact">Contact Us</a></li>
       </ul>
     </div>
     
+    <!-- Services Column -->
     <div class="footer__column">
-      <h3>Services</h3>
+      <h3>Our Services</h3>
       <ul>
-        <li><a href="#services">Residential Removal</a></li>
-        <li><a href="#services">Commercial Cleanouts</a></li>
-        <li><a href="#services">Garage Cleanouts</a></li>
-        <li><a href="#services">Construction Debris</a></li>
+        <li><i class="fas fa-check"></i><a href="#services">Residential Removal</a></li>
+        <li><i class="fas fa-check"></i><a href="#services">Commercial Cleanouts</a></li>
+        <li><i class="fas fa-check"></i><a href="#services">Garage Cleanouts</a></li>
+        <li><i class="fas fa-check"></i><a href="#services">Construction Debris</a></li>
+        <li><i class="fas fa-check"></i><a href="#services">Appliance Removal</a></li>
       </ul>
     </div>
     
+    <!-- Contact Column -->
     <div class="footer__column">
       <h3>Contact Info</h3>
       <ul>
-        <li><i class="fa-solid fa-phone"></i> <a href="tel:+19713826330">(971) 382-6330</a></li>
-        <li><i class="fa-solid fa-envelope"></i> <a href="mailto:hello@junkgopdx.com">hello@junkgopdx.com</a></li>
-        <li><i class="fa-solid fa-map-marker-alt"></i> Serving Portland, OR</li>
+        <li>
+          <i class="fas fa-phone"></i>
+          <a href="tel:+19713826330" class="footer__contact-link">(971) 382-6330</a>
+        </li>
+        <li>
+          <i class="fas fa-envelope"></i>
+          <a href="mailto:hello@junkgopdx.com" class="footer__contact-link">hello@junkgopdx.com</a>
+        </li>
+        <li>
+          <i class="fas fa-map-marker-alt"></i>
+          <span class="footer__contact-link">Serving Portland Metro Area</span>
+        </li>
+        <li>
+          <i class="fas fa-clock"></i>
+          <span class="footer__contact-link">Mon-Sun: 7am-7pm</span>
+        </li>
       </ul>
     </div>
   </div>
   
   <div class="footer__bottom">
-    <p>&copy; <script>document.write(new Date().getFullYear())</script> JunkGo PDX. All rights reserved.</p>
+    <div class="footer__legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">FAQ</a>
+    </div>
+    <p>&copy; <span id="currentYear"></span> JunkGo PDX. All rights reserved.</p>
   </div>
 </footer>
 
@@ -1362,15 +1556,10 @@ Message: ${data.message}
       }
     });
   });
-});
-
-// Add current year to footer
-document.addEventListener('DOMContentLoaded', function() {
-  const yearSpan = document.querySelector('.footer__bottom p');
-  if (yearSpan) {
-    const currentYear = new Date().getFullYear();
-    yearSpan.innerHTML = `&copy; ${currentYear} JunkGo PDX. All rights reserved.`;
-  }
+  
+  // Set current year in footer
+  const currentYear = new Date().getFullYear();
+  document.getElementById('currentYear').textContent = currentYear;
 });
 </script>
 
