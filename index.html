@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en" prefix="og: https://ogp.me/ns#">
 <head>
@@ -1165,6 +1166,79 @@
         gap: 15px;
       }
     }
+    /* LOCATIONS SECTION */
+.locations {
+  padding: 80px 20px;
+  background: #ffffff;
+}
+
+.locations__container {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.locations__container h2 {
+  font-size: 36px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 12px;
+}
+
+.locations__container p {
+  font-size: 18px;
+  color: #4b5563;
+  margin-bottom: 40px;
+}
+
+.locations__map {
+  width: 100%;
+  height: 420px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  margin-bottom: 40px;
+}
+
+.locations__map iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.locations__buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.locations__buttons a {
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  color: #111827;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.locations__buttons a:hover {
+  background: #16a34a;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(22,163,74,0.25);
+}
+
+/* MOBILE */
+@media (max-width: 640px) {
+  .locations__container h2 {
+    font-size: 28px;
+  }
+  .locations__map {
+    height: 300px;
+  }
+}
 
     </style>
 </head>
@@ -1190,6 +1264,7 @@
         <ul class="nav__list">
           <li class="nav__item"><a class="nav__link" href="#home">Home</a></li>
           <li class="nav__item"><a class="nav__link" href="#services">Services</a></li>
+        <li class="nav__item"><a class="nav__link" href="#locations">Locations</a></li>
           <li class="nav__item"><a class="nav__link" href="#contact">Contact</a></li>
           <li class="nav__item"><a class="btn" href="#contact">BOOK NOW</a></li>
         </ul>
@@ -1297,7 +1372,104 @@
       </a>
     </div>
   </section>
-  
+<section class="service-area" style="padding:60px 20px; background:#f8f9fa;">
+  <h2 style="text-align:center; font-size:32px; font-weight:700; margin-bottom:40px;">
+    Our Service Areas in Oregon
+  </h2>
+
+  <div id="map" style="width:100%; max-width:1200px; height:600px; margin:0 auto; border-radius:16px; overflow:hidden; box-shadow:0 12px 30px rgba(0,0,0,0.15);"></div>
+</section>
+
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+  // Initialize map
+  const map = L.map('map').setView([45.5, -122.7], 9);
+
+  // Add OSM tiles
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap'
+  }).addTo(map);
+
+  // Cities
+  const cities = [
+    { name: "Portland, OR", coords: [45.5152, -122.6784] },
+    { name: "Lake Oswego, OR", coords: [45.4207, -122.6706] },
+    { name: "Oregon City, OR", coords: [45.3573, -122.6068] },
+    { name: "Wilsonville, OR", coords: [45.3083, -122.7710] },
+    { name: "Woodburn, OR", coords: [45.1395, -122.8449] },
+    { name: "Beaverton, OR", coords: [45.4860, -122.8037] },
+    { name: "Gresham, OR", coords: [45.5017, -122.4305] },
+    { name: "Tigard, OR", coords: [45.4302, -122.7710] },
+    { name: "Hillsboro, OR", coords: [45.5229, -123.0639] },
+    { name: "Milwaukie, OR", coords: [45.4312, -122.6708] },
+    { name: "Tualatin, OR", coords: [45.3742, -122.7660] },
+    { name: "McMinnville, OR", coords: [45.2042, -123.2019] },
+    { name: "Scotts Mills, OR", coords: [45.0835, -122.7962] },
+    { name: "Molalla, OR", coords: [45.1704, -122.6037] },
+    { name: "Silverton, OR", coords: [45.0074, -122.7909] }
+  ];
+
+  // Add markers
+  const markers = cities.map(city => {
+    return L.marker(city.coords, {
+      icon: L.icon({
+        iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
+        iconSize: [32,32]
+      })
+    }).bindPopup(`<b>${city.name}</b>`).addTo(map);
+  });
+
+  // Convex hull algorithm for proper polygon (simple 2D)
+  function convexHull(points) {
+    points = points.map(p => [p[1], p[0]]); // swap lat/lng for proper 2D coords
+    points.sort((a,b)=> a[0]-b[0] || a[1]-b[1]);
+
+    const cross = (o,a,b) => (a[0]-o[0])*(b[1]-o[1]) - (a[1]-o[1])*(b[0]-o[0]);
+
+    const lower = [];
+    for(const p of points){
+      while(lower.length >=2 && cross(lower[lower.length-2], lower[lower.length-1], p) <=0) lower.pop();
+      lower.push(p);
+    }
+
+    const upper = [];
+    for(const p of points.reverse()){
+      while(upper.length >=2 && cross(upper[upper.length-2], upper[upper.length-1], p) <=0) upper.pop();
+      upper.push(p);
+    }
+
+    upper.pop();
+    lower.pop();
+    const hull = lower.concat(upper);
+    return hull.map(p => [p[1],p[0]]); // swap back to lat/lng
+  }
+
+  const hullCoords = convexHull(cities.map(c=>c.coords));
+
+  // Add service area polygon
+  L.polygon(hullCoords, {
+    color:'#1E90FF',
+    fillColor:'#1E90FF',
+    fillOpacity:0.15,
+    weight:2
+  }).addTo(map);
+
+  // Fit map to polygon
+  map.fitBounds(hullCoords);
+</script>
+
+
+
+
+
+
+
   <section class="contact-form" id="contact">
     <div class="contact-form__container">
       <h2>Contact Us</h2>
